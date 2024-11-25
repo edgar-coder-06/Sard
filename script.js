@@ -10,7 +10,7 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
 
     try {
         // Send a POST request to the backend
-        const response = await axios.post("http://10.0.40.181:3000/getPercentage", { username });
+        const response = await axios.post("http://localhost:3000/getPercentage", { username });
 
         if (response.data.percentage !== null) {
             resultElement.textContent = `Percentage: ${response.data.percentage}%`;
