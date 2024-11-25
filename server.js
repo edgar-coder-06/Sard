@@ -43,6 +43,11 @@ app.post("/getPercentage", async (req, res) => {
     }
 });
 
+// Route to handle the root path (Optional for testing)
+app.get("/", (req, res) => {
+    res.send("Backend is working!");
+});
+
 // Start the server
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server running at http://0.0.0.0:${port}`);
