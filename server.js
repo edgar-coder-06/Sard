@@ -1,3 +1,5 @@
+const https = require("https");
+const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -8,7 +10,7 @@ const port = 3000;
 
 // PostgreSQL connection configuration
 const pool = new Pool({
-    host: "10.0.40.140",
+    host: "10.0.40.181",
     port: 5432,
     user: "postgres",
     password: "edgar321",
@@ -43,12 +45,13 @@ app.post("/getPercentage", async (req, res) => {
     }
 });
 
-// Route to handle the root path (Optional for testing)
-app.get("/", (req, res) => {
-    res.send("Backend is working!");
-});
+// Load SSL certificates
+const privateKey = fs.readFileSync("private.key", "utf8");
+const certificate = fs.readFileSync("server.crt", "utf8");
 
-// Start the server
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running at http://0.0.0.0:${port}`);
+const credentials = { key: privateKey, cert: certificate };
+
+// Start HTTPS server
+https.createServer(credentials, app).listen(port, () => {
+    console.log(`Server running at https://10.0.40.181:${port}`);
 });
