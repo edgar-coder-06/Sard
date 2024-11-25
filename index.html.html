@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Finder</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, input, button, p {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, button {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find Percentage</h1>
+    <label for="username">Enter Username:</label>
+    <input type="text" id="username" placeholder="Username">
+    <button id="submitBtn">Get Percentage</button>
+    
+    <p id="result"></p>
+    <p id="status"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>
