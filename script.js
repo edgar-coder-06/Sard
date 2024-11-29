@@ -1,25 +1,30 @@
-document.getElementById("submitBtn").addEventListener("click", async () => {
-    const username = document.getElementById("username").value;
-    const resultElement = document.getElementById("result");
-    const statusElement = document.getElementById("status");
+function fetchPercentage() {
+    const username = document.getElementById('username').value;
+    const percentageDisplay = document.getElementById('percentageDisplay');
+    const requestsDisplay = document.getElementById('requestsDisplay');
+    const errorDisplay = document.getElementById('errorDisplay');
 
-    if (!username) {
-        resultElement.textContent = "Please enter a username.";
+    if (username.trim() === "") {
+        errorDisplay.textContent = "Please enter a username.";
+        percentageDisplay.textContent = "Percentage: ";
+        requestsDisplay.textContent = "Requests: ";
         return;
     }
 
-    try {
-        // Send a POST request to the backend
-        const response = await axios.post("https://10.0.40.181:3000/getPercentage", { username });
-
-        if (response.data.percentage !== null) {
-            resultElement.textContent = `Percentage: ${response.data.percentage}%`;
-        } else {
-            resultElement.textContent = "No percentage found for this user.";
-        }
-
-        statusElement.textContent = response.data.status;
-    } catch (error) {
-        resultElement.textContent = `Error: ${error.message}`;
-    }
-});
+    errorDisplay.textContent = "";
+    fetch(`http://91.107.197.203:5000/get_percentage?name=${username}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                errorDisplay.textContent = data.error;
+                percentageDisplay.textContent = "Percentage: ";
+                requestsDisplay.textContent = "Requests: ";
+            } else {
+                percentageDisplay.textContent = `Percentage: ${data.percentage}`;
+                requestsDisplay.textContent = `Requests: ${data.requests}`;
+            }
+        })
+        .catch(err => {
+            errorDisplay.textContent = "Error: " + err.message;
+        });
+}
